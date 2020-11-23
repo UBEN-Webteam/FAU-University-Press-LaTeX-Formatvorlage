@@ -1,0 +1,821 @@
+\documentclass[
+  paper = 17x24, % studienpartitur, a5, a5paper
+  language = english, % german
+  acronym = true, % none, true, false, combined, onlyabbreviation, onlysymbol, noabbreviation, nosymbol
+  bibliography = true, % none, split, false
+  acronymline = onlyhorizontal, % default, true, false, both, all, none, nohorizontal,
+                                % onlyhorizontal, novertical, onlyvertical, 
+]{faupress}
+
+\firstname{FAU}
+\lastname{University Press}
+\yearofpublication{2020}
+\degree{M.Sc.}
+\origin{Erlangen}
+\title{Documentation}
+\subtitle{For the LaTeX template}
+\institute{University Library of Erlangen-Nürnberg}
+\supervisor{Supervisor}
+\series{FAU Studien aus dem Maschinenbau}
+\volume{XXX}
+\doi{10.25593/978-3-96147-XXX-X}
+\isbn{978-3-96147-XXX-X}
+\eisbn{978-3-96147-XXX-X}
+\issn{2625-9974}
+\printinformation{ggf. Satz \\%
+  ggf. Druck}
+\oralexam{12.12.1769}
+\dean{Daniel de Superville}
+\reviewer{Friedrich III. von Brandenburg-Bayreuth \\
+  Christian Friedrich Carl Alexander von Brandenburg-Ansbach}
+
+% Only included for the documentation
+\input{documentation/doc-settings.tex}
+
+\begin{document}
+\maketitle % Typesets the titlepage of the publisher
+
+\frontmatter % Starts the frontmatter (page numbering, roman numerals, no header)
+\makefacultytitle % Typesets the titlepage of the faculty
+
+\begin{preface}
+
+This is the documentation of the \LaTeX{} template for publications in the series
+\enquote{FAU Studien aus dem Maschinenbau}. This guide provides an overview of the changes
+made to the standard \code+scrbook+ class (on which this class is based on) that are
+important to the end user.
+
+It also introduces some packages that are automatically loaded by the class. For the
+packages for acronyms and bibliographies class specific commands have been
+defined to meet the typographical requirements. A list of all packages loaded by the class
+can be found under \secref{cha:packages}.
+
+This documentation covers only a very small part of the features of \LaTeX{} and the included
+packages. It is always worth taking a look at the documentation of the individual packages.
+
+A detailed introduction to \LaTeX{} in general can be found at \linebreak
+\url{https://www.overleaf.com/learn/latex/Main_Page}.
+
+\end{preface}
+
+\tableofcontents\label{toc}
+\faupressprintacronyms
+\listoffigures\label{lof}
+\listoftables\label{lot}
+
+\mainmatter % Arabic numerals
+
+\begin{introduction}
+
+The class \code+faupress+ implements all format specifications of the \acs{fau} University
+Press. To use this class in its entirety, it \important{should be compiled with
+  Lua\LaTeX}.
+
+To achieve better consistency, some new commands have been defined and some old ones have
+been redefined. Such commands were marked with \textcolor{documentation}{\itshape Custom command} in the following documentation.
+
+\end{introduction}
+
+\chapter{Class options}
+
+The class is loaded by the following command:
+\begin{codebox}
+  \documentclass[<options>]{faupress}
+\end{codebox}
+There are several options available that can be passed as key-value pairs. Multiple
+options are separated by commas. Below you can see the default options and their alternatives.
+
+The \code+paper+ option can be used to change the paper size:
+\begin{codebox}
+  paper = 17x24 //ann{default}
+          a5
+\end{codebox}
+There are two languages available:
+\begin{codebox}
+  language = german //ann{default}
+             english
+\end{codebox}
+Setting the language takes care of the microtypography, changes language specific
+commands (e.g. \code+\tableofcontents+) and  switches to the correct hyphenation
+pattern. The \code+polyglossia+ package is used for this. The language that was not
+selected is still set as a second language. This allows individual sections to be set in
+the other language. The package provides an environment for this, e.g. for German:
+\begin{codeexamplebox}
+  Today is \today.
+  \begin{german}
+    Heute ist der \today.
+  \end{german}
+\end{codeexamplebox}
+
+The list of abbreviations and symbols is generated using the \code+acro+ package. By
+default, separated lists for abbreviations and symbols are printed. If want only one big
+list you can use the option \code+combined+. If you only want one of those lists you can
+use \code+onlyabbreviation+ and \code+onlysymbol+.
+\begin{codebox}
+  acronym = true //ann{default}
+            combined
+            onlyabbreviation
+            onlysymnnbol
+\end{codebox}
+By default the rows of the acronym table are interspersed by horizontal lines
+and the columns are separated by vertical lines. This behaviour can be changed
+using the following option:
+\begin{codebox}
+  acronymline = both //ann{default}
+                onlyhorizontal
+                onlyvertical
+                none
+\end{codebox}
+For more information, see \secref{cha:acronyms}.
+          
+By default, this class uses the \code+biblatex+ to manage citations. If you do not want to
+use this feature you can switch it of:
+\begin{codebox}
+  bibliography = true //ann{default}
+                 none
+\end{codebox}
+Setting this option to \code+none+ stops \code+biblatex+ and all associated definitions
+from being loaded. For more information, see \secref{cha:bibliography}.
+
+The bibliography consists of three parts, the general bibliography, the one of
+student's works referring to this work and the one for own publications. If one
+wants to disable one of these there is the option:
+\begin{codebox}
+  bibliographypart = all //ann{default}
+                     none
+                     nomain
+                     onlymain
+                     noown
+                     onlyown
+                     nostudent
+                     onlystudent
+\end{codebox}
+
+The options for this documentation are:
+\begin{codebox}
+  \documentclass[
+    paper = 17x24,
+    language = english,
+    acronym = true,
+    acronymline = onlyhorizontal,
+    bibliography = true
+    ]{faupress}
+\end{codebox}
+
+\chapter{Structure of the document}
+
+This chapter gives a brief summary of the commands available to structure the
+document.
+
+The title pages are created automatically. To display the those its components have to be
+declared in the preamble of the document. The storing commands for this class can be found
+under \secref{app:storing} in the \nameref{app:appendix}.
+
+\section{Front page}
+The front page of this document is generated by the command:
+\begin{codebox}[custom]
+  \maketitle
+\end{codebox}
+This typesets the first two pages of the document using the information given in the
+preamble.
+
+\section{Front matter}
+After the first two pages the front matter is started by the command:
+\begin{codebox}
+  \frontmatter
+\end{codebox}
+This command switches on page numbering  using Roman numerals. The first two pages in the
+front matter are the title page of the faculty, which are also generated from the storing
+commands in the preamble by:
+\begin{codebox}[custom]
+  \makefacultytitle
+\end{codebox}
+\newpage
+The faculty title page is followed by the preface. The preface chapter is started by
+\begin{codebox}[custom]
+  \begin{preface}
+  \end{preface}
+\end{codebox}
+This command typesets a unnumbered chapter named \enquote{Preface} (German:
+\enquote{Vorwort}). This chapter does not appear in the table of contents, which is
+automatically generated from the sectioning commands used in the document by the command:
+\begin{codebox}
+  \tableofcontents
+\end{codebox}
+The table of contents for this document can be found on \pageref{toc}. The first chapter
+of the front matter to appear in the table of contents is the List of Symbols and
+Abbreviations (German: \enquote{Formelzeichen- und Abkürzungsverzeichnis}). With the help
+of the \texttt{acro} package the list can be generated automatically:
+\begin{codebox}[custom]
+  \faupressprintacronyms
+\end{codebox}
+For more information, see \secref{cha:acronyms}.
+
+The front matter is completed by lists of figures and of tables:
+\begin{codebox}
+  \listoffigures
+  \listoftables
+\end{codebox}
+Both can be found on pages~\pageref{lof} and \pageref{lot} respectively.
+
+\newpage
+\section{Main matter}
+The main matter is started by the command:
+\begin{codebox}
+  \mainmatter
+\end{codebox}
+Here, the page numbering is reset and displayed with Arabic numerals.
+
+The first chapter in the main part of the document is \enquote{Introduction}
+(German: \enquote{Einleitung}) and is typeset by:
+\begin{codebox}[custom]
+  \begin{introduction}    
+  \end{introduction}
+\end{codebox}
+All chapters \& sections in the main matter are numbered and appear in the table of
+contents. This is done using the standard \LaTeX{} commands:
+\begin{codebox}
+  \chapter{<text>}
+  \section{<text>}
+  \subsection{<text>}
+  \subsubsection{<text>}
+\end{codebox}
+The body ends with the chapters \enquote{Summary and outlook} and \enquote{Zusammenfassung
+  und Ausblick}:
+\begin{codebox}
+  \chapter{Zusammenfassung und Ausblick}
+  \chapter{Summary and outlook}
+\end{codebox}
+
+\newpage
+\subsection{Short titles}
+
+For long chapter \& section headings it is recommended to use a short title. All
+sectioning commands have an optional argument to set a short title.
+\begin{codebox}
+  \chapter[<short title>]{<long title>}
+  \section[<short title>]{<long title>}
+  \subsection[<short title>]{<long title>}
+  \subsubsection[<short title>]{<long title>}
+\end{codebox}
+The short title is what appears in the table of contents and in the headline. It should be
+used to avoid two-line headlines.
+
+\section{Appendix \& Bibliography}
+
+The chapter \enquote{Appendix} (German: \enquote{Anhang}) is typeset using the command:
+\begin{codebox}[custom]
+  \appendix
+\end{codebox}
+This chapter is unnumbered and appears in the table of contents. The
+\code+\chapter+ command does not exist in the appendix. The normal sectioning
+commands work the same in the appendix. Only sections appear in the table of
+contents and are numbered with letters, all other sectioning commands do not
+appear in the table of contents and are numbered. It also automatically reduces
+the fontsize in the table of contents.
+\begin{codebox}
+  \section{<text>}
+  \subsection{<text>}
+  \subsubsection{<text>}
+\end{codebox}
+
+
+
+The document is completed by the backmatter:
+\begin{codebox}
+  \backmatter
+\end{codebox}
+In the backmatter the \code+\chapter+ command is reintroduced and the fontsize
+in the table of contents is small than for the main part. It contains the bibliography:
+\begin{codebox}[custom]
+  \faupressprintbibliography
+\end{codebox}
+This command creates a general bibliography, a list of own publications, and a list of
+students' theses referring to this work. For more information see
+\secref{cha:bibliography}.
+
+
+\chapter{Acronyms}
+\label{cha:acronyms}
+
+To typeset acronyms the package \texttt{acro}\urlfootnote{https://ctan.org/pkg/acro} is automatically loaded by the class.
+
+Acronyms are defined in the file \texttt{acronyms.tex} (the class will
+automatically load this file). The basic syntax to define an acronym is:
+\begin{codebox}
+  \DeclareAcronym{<label>}{
+    short = <acronym>,
+    long  = <text>
+  }
+\end{codebox}
+These acronyms can be called in the body of the document using the command:
+\begin{codebox}
+ \ac{<label>}
+\end{codebox}
+At the first appearance, this commands prints the long form of the
+acronym followed by the short form in parentheses. After this, each
+time \code+\ac{<label>}+ is used only the short form is printed. There
+are many variations (capitalization, plural forms, only short form,
+only long form) of this command, which can be found in the
+official documentation.
+
+To define formula symbols you need to supply extra information. Here, the basic syntax is:
+\begin{codebox}
+  \DeclareAcronym{<label>}{
+    short = \ensuremath{<symbol>},
+    sort  = <sort-key>,
+    long  = <text>,
+    extra = <unit>,
+    class = {formula}
+  }
+\end{codebox}
+For math symbols, \code+\ensuremath+ should be used so that the
+acronym can be used in text and math environments without problems. As
+\code+<sort-key>+ a word must be given. This word is used in the list
+of acronyms for sorting. For the formula symbol to appear in the
+correct list, it must be assigned to the \texttt{formula} class. 
+
+To display lists of all declared acronyms and symbols use:
+\begin{codebox}[custom]
+  \faupressprintacronyms[<options>]
+\end{codebox}
+You can pass the same optional parameters to this command as you would
+pass them to \code+\printacronyms+ from the original package.
+
+The \code+\faupressprintacronyms+ command typesets a chapter called
+\enquote{List of Symbols and Abbreviations} (German:
+\enquote{Formelzeichen- und Abkürzungsverzeichnis}). In this chapter a
+list of abbreviations (German: \enquote{Abkürzungsverzeichnis}) and a
+list of symbols (German: \enquote{Formelverzeichnis}) are created
+separately. Both lists can be combined to one by setting the class
+option \code+acronym+ to \code+combined+. If you only want one of those lists you can set
+\code+acronym+ to \code+onlyabbreviation+ and \code+onlysymbol+. 
+
+Furthermore, the fixed label \texttt{faupressacronyms} is given to the
+chapter for referencing.
+
+The acronym functionality can be switched off completely via the class option
+\texttt{noacro}. This option prevents the class from loading the \texttt{acro} 
+packages and from defining associated commands.
+\newpage
+\section{Examples}
+
+We define text acronyms in \texttt{acronyms.tex} as follows:
+\begin{codebox}[acronym]
+  \DeclareAcronym{fau}{
+    short = FAU,
+    long  = Friedrich-Alexander-Universät
+            Erlangen-Nürnberg
+  }
+  \DeclareAcronym{latex}{
+    short = \LaTeX,
+    long  =  Lamport \TeX
+  }
+\end{codebox}
+
+Now we can use the acronyms in the main text:
+\begin{codeexamplebox}
+  \ac{fau} was founded in 1742. Only 242 years
+  after the foundation of \ac{fau}, \ac{latex}
+  was first published.
+\end{codeexamplebox}
+We already used \code+faupressprintacronyms+ at the beginning of the
+document. The list of acronyms can be found on page 
+\pageref{faupressacronyms}. On the same page you can only see the list
+of symbols. In both lists, all acronyms that were defined are always displayed,
+regardless of whether they were used in the main text or not. 
+
+\newpage
+Formula symbols are defined as follows:
+\begin{codebox}[acronym]
+  \DeclareAcronym{c0}{
+    short = \ensuremath{c_0},
+    sort = {c},
+    long = speed of light in vacuum,
+    extra = \si{\meter\per\second},
+    class = {formula}
+  }
+  \DeclareAcronym{gamma}{
+    short = \ensuremath{\gamma},
+    sort = {gamma},
+    long = Lorentz factor,
+    class = {formula}
+  }
+\end{codebox}
+Here, we typeset the units with help of the \texttt{siunitx} package (see
+\secref{sec:units}). Since \code+\ensuremath+ was used, these acronyms can be
+used in both text and math mode:
+\begin{codeexamplebox}
+  The \ac{c0} is needed to define the \ac{gamma}:
+  \begin{equation}
+    \acs{gamma} = \frac1{\sqrt{1 -
+        \left(\frac{v}{\acs{c0}}\right)}^2}
+  \end{equation}
+\end{codeexamplebox}
+It is advisable to use only the short forms of the acronym in math mode. To ensure
+this, we use the command \code+\acs+.\footnote{See \texttt{acro}
+  documentation: \url{https://ctan.org/pkg/acro}}
+
+\chapter{Figures \& tables}
+\label{figures-and-tables}
+Figures and tables are placed inside so called floats. These are containers for things in a
+document that cannot be broken over a page. They automatically take care of the placement
+of graphics and tables in the text and format the caption.
+To create a figure that floats, use:
+\begin{codebox}
+  \begin{figure}[<placement>]
+  \end{figure}
+\end{codebox}
+In an analogous manner, floating tables is created by: 
+\begin{codebox}
+  \begin{table}[<placement>]
+  \end{table}
+\end{codebox}
+The captions are set inside those floats by:
+\begin{codebox}
+  \caption{<text>}
+\end{codebox}
+This command is only available in float environments and should be placed \important{above tables}
+and \important{below figures}. It is also possible to refer to floats in the text, for more
+on this see \secref{cha:ref}.
+
+\section{Figures}
+
+The \code+graphicx+\urlfootnote{https://ctan.org/pkg/graphicx} package allows the
+integration of images into \LaTeX{} documents. This package is automatically loaded by the
+class. 
+
+The most important command of this package is:
+\begin{codebox}
+  \includegraphics[<options>]{<image path>}
+\end{codebox}
+The \code+<image path>+ can be given as an absolute path or relative to the directory
+where the \texttt{.tex} file is located. The options allow you to scale, rotate and crop
+images. All options can be found in the documentation.\urlfootnote{https://ctan.org/pkg/graphicx}
+
+Here you can see an example of a full figure:
+% codeexamplebox does not work with floats
+\begin{tcolorbox}
+\begin{lstlisting}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]
+      {figures/lines.jpg}
+    \caption{This is a figure.}
+  \end{figure}
+\end{lstlisting}
+  \tcblower
+  \centering
+  \includegraphics[width=0.5\textwidth]{lines.jpg}
+  \captionof{figure}{This is a figure.}
+  \label{example-figure}
+\end{tcolorbox}
+The image is scaled to half the text width using the \code+width+ option. An entry was
+also automatically created in the \secref{lof}.
+
+If there is a dedicated image folder it can be specified with the \code+\graphicspath+
+command in the preamble. The default for this class is:
+\begin{codebox}
+  \graphicspath{
+    {./graphics/},
+    {./figures/}
+  }
+\end{codebox}
+
+\section{Tables}
+The \code+tabular+ environment can be used to typeset tables with optional horizontal and
+vertical lines. \LaTeX{} determines the width of the columns automatically.  
+\begin{codeexamplebox}
+  \begin{tabular}{| r | c | l |}
+    \hline
+    This & is a      & table!         \\\hline
+    This & table has & three columns. \\
+    \hline
+  \end{tabular}
+\end{codeexamplebox}
+The number of columns does not need to be specified as it is inferred by looking at the number of arguments provided. It is also possible to add vertical lines between the columns here. The following symbols are available to describe the table columns:\\[0.5\baselineskip]
+\begin{tabular}{r @{\;--\;} l}
+  \code+l+ & left-justified column \\
+  \code+c+ & centered column \\
+  \code+r+ & right-justified column \\
+  \code+p{<width>}+ & paragraph column with fixed width \\
+  \code+|+ & vertical line \\
+  \code+||+ & double vertical line
+\end{tabular}\\[0.5\baselineskip]
+Three additional column types are defined by this class:\\[0.5\baselineskip]
+\begin{tabular}{r @{\;--\;} l}
+  \code+L{<width>}+ & left-justified column with fixed width \\
+  \code+C{<width>}+ & centered column with fixed width \\
+  \code+R{<width>}+ & right-justified column with fixed width \\
+\end{tabular}
+
+\newpage
+There is a variety of packages available to extend the table functionality of \LaTeX. The
+following packages are automatically included by the class:\\[0.5\baselineskip]
+\begin{tabular}{r @{\;--\;} p{0.75\textwidth}}
+  \code+booktabs+ & Enhances the quality of tables in \LaTeX.\urlfootnote{https://ctan.org/pkg/booktabs}\\
+  \code+array+ & An extended implementation of the array and tabular environments which extends the options for column formats, and provides \enquote{programmable} format specifications.\urlfootnote{https://ctan.org/pkg/array} \\
+  \code+longtable+ & Allows you to write tables that continue to the next page.\urlfootnote{https://ctan.org/pkg/longtable}\\
+\end{tabular}
+
+\newpage
+\subsection{Example}
+This section shows a somewhat more involved example that uses functionality from the
+packages mentioned above.
+% codeexamplebox does not work with floats
+\begin{tcolorbox}
+\begin{lstlisting}
+  \begin{table}
+    \centering
+    \caption{This is a table.}
+    \begin{tabular}{>{\bfseries}r l}
+      \toprule
+             & Last modified \\\midrule
+         Day & \the\day   \\
+       Month & \the\month \\
+        Year & \the\year  \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{lstlisting}
+  \tcblower
+  \centering
+  \captionof{table}{This is a table.}
+  \label{example-table}
+  \begin{tabular}{>{\bfseries}r l}
+    \toprule
+    & Last modified \\\midrule
+    Day & \the\day      \\
+    Month & \the\month    \\
+    Year & \the\year     \\
+    \bottomrule
+  \end{tabular}
+\end{tcolorbox}
+The \code+array+ package allows you to prefix a column using the \code+>+ operator. This
+is used in this example to typeset the first column in bold font. The commands
+\code+\toprule+, \code+\midrule+, and \code+\bottomrule+ are provided by the
+\code+booktabs+ package. These commands draw horizontal lines with adjusted spacing.
+
+The commands \code+\the\day+, \code+\the\month+, and \code+\the\year+ are standard \TeX{}
+commands. They print out the day, month, and year of the day the underlying \texttt{.tex}
+document was compiled.
+
+\chapter{Labels and cross-referencing}
+\label{cha:ref}
+In \LaTeX, we can label entities that are numbered (sections, floats, formulas, etc.), and
+then use that label to refer to them elsewhere.
+
+\begin{codebox}
+  \label{<marker>}
+\end{codebox}
+The marker can be seen as a name that we give to the object that we want to
+reference. It is important to add \label after a numbered element, otherwise the label
+will not \enquote{latch on}.
+
+The number assigned to the object labeled by \code+<marker>+ is printed by the command:
+\begin{codebox}
+  \ref{<marker>}
+\end{codebox}
+
+The page number of the labeled object is printed using:
+\begin{codebox}
+  \pageref{<marker>}
+\end{codebox}
+
+The package \code+hyperref+\urlfootnote{https://ctan.org/pkg/hyperref}, which is loaded by
+the class, provides the commands:
+\begin{codebox}
+  \autoref{<marker>}
+  \nameref{<marker>}
+\end{codebox}
+\code+\autoref+ prints the name of the object the \code+<marker>+ refers to in front of
+the number, e.g. \enquote{\autoref{example-figure}}. \code+\nameref+ prints the title of
+the object it refers to, e.g.~\enquote{\nameref{cha:ref}} for the current chapter.
+
+Apart from providing these commands, all cross-referenced elements become hyperlinked by
+importing the \code+hyperref+ package. In addition, the hyperref package also provides
+commands to typeset web links. 
+
+\section{Example}
+
+First, we need to add a label to our example from page \pageref{example-figure}.
+The \code+\label+ command has to always be placed below the \code+\caption+ command:
+\begin{codebox}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]
+    {figures/lines.jpg}
+    \caption{This is a figure.}
+    \label{example-figure}
+  \end{figure}  
+\end{codebox}
+We also add a label to the chapter about figures and tables:
+\begin{codebox}
+  \chapter{Figures \& tables}
+  \label{figures-and-tables}
+\end{codebox}
+Now, we can use these markers to refer to objects we labeled:
+\begin{codeexamplebox}
+  \autoref{example-figure} is on
+  page~\pageref{example-figure} in
+  the chapter \nameref{figures-and-tables}.
+\end{codeexamplebox}
+
+\chapter{Math}
+This class automatically includes the
+\code+mathtools+\urlfootnote{https://www.ctan.org/pkg/mathtools} package and the packages
+of the American Mathematical Society
+(\code+amsmath+\urlfootnote{https://www.ctan.org/pkg/amsmath},
+\code+amsfonts+\urlfootnote{https://www.ctan.org/pkg/amsfonts}, \code+assume+). 
+
+To typeset mathematical expressions as part of the text, the inline mode is used as you
+can see in this example:
+\begin{codeexamplebox}
+  This \(V - E + F = 2\) is an inline equation.
+\end{codeexamplebox}
+Expressions, which are not part of the text directly, are typeset in display mode. For
+numbered equations there is the \code+equation+ environment, which puts the expression on
+separate lines:
+\begin{codeexamplebox}
+  This is a numbered equation
+  \begin{equation}
+    R_{\mu\nu} - \frac12 g_{\mu\nu} R
+      = \frac{8\pi G}{{c_0}^4}T_{\mu\nu}.
+  \end{equation}
+\end{codeexamplebox}
+\newpage
+For unnumbered equations in display mode there is a starred version of the
+\code+equation*+. The short form for this is \code+\[ \]+:
+\begin{codeexamplebox}
+  This is unnumbered equation
+  \[
+    i \hbar \frac\partial{\partial t}
+      \Psi = \hat H \Psi.
+  \]
+\end{codeexamplebox}
+
+This class loads the \code+unicode-math+ packages, which supplies the following
+commands for formatting math:
+\begin{codeexamplebox}
+  \( \symbf{AaBb\nabla\alpha\beta\gamma} \)   \\
+  \( \symrm{AaBb\nabla\alpha\beta\gamma} \)   \\
+  \( \symfrak{AaBb\nabla\alpha\beta\gamma} \) \\
+  \( \symbfit{AaBb\nabla\alpha\beta\gamma}\)  \\
+  \dots
+\end{codeexamplebox}
+Other formatting commands might not work, because of the used fonts.
+
+\section{Units}
+\label{sec:units}
+
+The \code+siunitx+\urlfootnote{https://ctan.org/pkg/siunitx} package offers sophisticated
+features to typeset units and numbers. Only the basic functions are shown here, but it is
+worth taking a look at the documentation. 
+
+The packages offers two commands to typesets units: \code+\si+ and \code+\SI+. The first
+one only prints the unit. The second one has two arguments and typeset unit in combination
+with a number:
+\begin{codeexamplebox}
+  \SI{1}{\meter} are \SI{100}{\cm} and lots
+  of \si{\micro\meter}.
+
+  The \acl{c0} is
+  \SI{299 792 458}{\metre\per\second}.
+\end{codeexamplebox}
+As a unit you can either use normal text or predefined unit macros, which are available
+for all common units.
+
+\newpage
+\code+siunitx+ makes it easy to print quantities with uncertainties:
+\begin{codeexamplebox}
+  This document has \SI{40 +- 5}{pages}.
+\end{codeexamplebox}
+How the uncertainty is displayed in detail can be controlled via \code+\sisetup+ (There
+are innumerable other options). The default for this class is:
+\begin{codebox}
+  \sisetup{
+    separate-uncertainty = true,
+    round-mode = places,
+    round-precision = 3,
+  }
+\end{codebox}
+As you can see, the package also takes care of rounding units.
+
+\chapter{Bibliography}
+\label{cha:bibliography}
+
+\minisec{Important:}
+The custom bibliography commands only work with Biber~2.14 (Bib\LaTeX{}~3.14) or
+newer. Additionally, due to the implementation of the custom commands, the command
+\code+\nocite{}+ cannot be used.
+
+
+To write and manage bibliographies, this class loads the
+\code+biblatex+\urlfootnote{https://ctan.org/pkg/biblatex} package. This package loads
+bibliographic information form \texttt{.bib} files and makes it available for citations in
+the document. For this class there are three \important{fixed}~\texttt{.bib} files in the
+folder \enquote{references}:\\[0.5\baselineskip]
+\begin{tabular}{@{}>{\ttfamily}r@{\;--\;} p{0.75\textwidth}}
+  bibliography.tex & for general literature you cite in your thesis\\
+  bibliography-own.tex & for own publications referring to this work\\
+  bibliography-student.tex & for students’ theses referring to this work
+\end{tabular}\\[0.5\baselineskip]
+A typical entry in such a file looks like this:
+\begin{codebox}[bib]
+  @book{lamport1994latex,
+    title={\LaTeX: a document preparation
+      system: user's guide and reference manual},
+    author={Lamport, Leslie},
+    year={1994},
+    publisher={Addison-Wesley},
+    edition={2}
+  }
+\end{codebox}
+It begins with the type of source and is followed by a keyword, which is later used for
+citing the entry. This keyword is followed by the bibliographic information. All fields
+for this can be found in the documentation. While one can edit these \texttt{.bib} files
+per hand, it is easier to use reference management software. Almost all of those programs
+can export their library to \text{.bib} files.
+
+In the text a source can then be cited using the \code+\cite+ command:
+\begin{codeexamplebox}
+  The first edition of Leslie Lamport's book
+  was published in 1985 \cite{lamport1994latex}.
+\end{codeexamplebox}
+\newpage
+The bibliography is constructed by:
+\begin{codebox}[custom]
+  \faupressprintbibliography
+\end{codebox}
+At first this commands prints all sources cited in the document from the file
+\texttt{bibliography.bib}. After this, it prints all sources contained in
+\texttt{bibliography-own.tex} under the title \enquote{Own publications referring to this
+  work} (German: \enquote{Verzeichnis promotionsbezogener, eigener Publikationen}) and all
+sources in \texttt{bibliography-student.tex} with the title \enquote{Students’ theses
+  referring to this work} (German: \enquote{Verzeichnis promotionsbezogener, studentischer
+  Arbeiten}). In the last two cases, all file entries are always printed, regardless of
+ whether they were referenced in the document or not.
+
+To generate a bibliography the program \texttt{biber} is used, which performs all sorting,
+label generation (and a lot more). In most \LaTeX{} environments you can specify that
+\texttt{biber} is executed directly when compiling.
+
+If you compile the file using the command line, the compilation process would look like this:
+\begin{codebox}[listing options = {style=bash}]
+  lualatex phd_thesis.tex
+  biber phd_thesis
+  lualatex phd_thesis.tex
+  lualatex phd_thesis.tex
+\end{codebox}
+Lua\LaTeX{} has to be executed twice at the end, so that all references are correct.
+
+
+\chapter{List of all included packages}
+\label{cha:packages}
+
+\textcolor{documentation}{The list is still missing!}
+
+\appendix
+\label{app:appendix}
+\section*{Storing commands}
+\label{app:storing}
+The storing commands needed for this class can be seen below. This code is used exactly
+like this in the preamble of this document:
+\begin{codebox}[custom]
+  \firstname{FAU}
+  \lastname{University Press}
+  \yearofpublication{2020}
+  \degree{M.Sc.}
+  \origin{Erlangen}
+  \title{Documentation}
+  \subtitle{For the LaTeX template}
+  \institute{University Library of
+    Erlangen-Nürnberg}
+  \supervisor{Supervisor}
+  \series{FAU Studien aus dem Maschinenbau}
+  \volume{XXX}
+  \doi{10.25593/978-3-96147-XXX-X}
+  \isbn{978-3-96147-XXX-X}
+  \eisbn{978-3-96147-XXX-X}
+  \issn{2625-9974}
+  \printinformation{ggf. Satz \\
+    ggf. Druck}
+  \oralexam{12.12.1769}
+  \dean{Daniel de Superville}
+  \reviewer{Friedrich III. von
+    Brandenburg-Bayreuth \\
+    Christian Friedrich Carl Alexander von
+    Brandenburg-Ansbach}
+\end{codebox}
+
+\faupressprintbibliography
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex 
+%%% TeX-engine: luatex
+%%% TeX-master: t 
+%%% End:
+

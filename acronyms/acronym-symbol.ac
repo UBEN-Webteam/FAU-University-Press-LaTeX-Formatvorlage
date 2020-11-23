@@ -1,0 +1,14 @@
+\DeclareAcronym{c0}{
+  short = \ensuremath{c_0},
+  sort = {c},
+  long = speed of light in vacuum,
+  extra = \si{\meter\per\second},
+  class = {symbol}
+}
+
+\DeclareAcronym{gamma}{
+  short = \ensuremath{\gamma},
+  sort = {gamma},
+  long = Lorentz factor,
+  class = {symbol}
+}

@@ -1,0 +1,130 @@
+\usepackage{footnote} 
+\makesavenoteenv{tabular} % Makes it possible to use footnotes in tabular environments
+\definecolor{documentation}{HTML}{974228}
+\usepackage{listings}
+\lstdefinestyle{bash}{
+  language=bash,
+  basicstyle=\ttfamily,
+  keywordstyle=\color{documentation},
+  alsoletter={-.0123456789},
+  morekeywords={
+    lualatex,
+    biber,
+    lualatex,
+    lualatex
+  },
+}
+
+\lstdefinestyle{latex}{
+  language=[LaTeX]Tex,
+  basicstyle=\ttfamily,
+  texcsstyle=\color{documentation},
+  moredelim =*[s][\color{gray}]{<}{>},
+  moredelim =**[is][\color{documentation!50}]{//ann\{}{\}},
+  moretexcs={
+    maketitle,
+    frontmatter,
+    makefacultytitle,
+    Preface,
+    tableofcontents,
+    listoffigures,
+    listoftables,
+    mainmatter,
+    Introduction,
+    chapter,
+    subsection,
+    subsubsection,
+    appendix,
+    faupressprintbibliography,
+    faupressprintacronyms,
+    DeclareAcronym,
+    ac,
+    acs,
+    si,
+    meter,
+    per,
+    second,
+    includegraphics,
+    graphicspath,
+    toprule,
+    midrule,
+    bottomrule,
+    autoref,
+    nameref,
+    SI,
+    cm,
+    micro,
+    metre,
+    acl,
+    sisetup,
+    firstname,
+    lastname,
+    degree,
+    origin,
+    subtitle,
+    institute,
+    supervisor,
+    series,
+    volume,
+    doi,
+    isbn,
+    eisbn,
+    issn,
+    printinformation,
+    oralexam,
+    dean,
+    reviewer
+  },
+}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins,xparse}
+
+\tcbset{
+  custom/.style={
+    enhanced,
+    overlay={
+      \node at ([xshift = -1.5cm,yshift=-0.3cm]frame.north east)
+      {\itshape\footnotesize\color{documentation}Custom command};
+    }
+  },
+  acronym/.style={
+    enhanced,
+    enlarge top by = 0.5mm,
+    overlay={
+      \node at ([xshift = -1.2cm,yshift=0.2cm]frame.north east)
+      {\ttfamily\footnotesize\color{documentation}acronym.tex};
+    }
+  },
+  bib/.style={
+    enhanced,
+    enlarge top by = 0.5mm,
+    overlay={
+      \node at ([xshift = -1.55cm,yshift=0.2cm]frame.north east)
+      {\ttfamily\footnotesize\color{documentation}bibliography.bib};
+    }
+  },
+  colback = white,
+  colframe = documentation,
+}
+
+\NewTCBListing{codebox}{ !O{} }{%
+  colback = white,
+  colframe = documentation,
+  listing only,
+  listing options = {style=latex},
+  #1
+}
+
+\NewTCBListing{codeexamplebox}{ !O{} }{%
+  colback = white,
+  colframe = documentation,
+  listing options = {style=latex},
+  #1
+}
+\lstset{style=latex}
+\newcommand{\code}{\lstinline}
+\newcommand{\secref}[1]{\textit{\nameref{#1}} on page~\pageref{#1}} % Command to reference
+% sections in style
+\newcommand{\urlfootnote}[1]{\footnote{\url{#1}}}
+\newcommand{\important}[1]{\textbf{#1}}
