@@ -1471,8 +1471,10 @@
   % (the unfinished successor of LaTeX2e). Thus first the expl3 syntax is
   % turned on, the boolean is defined and then the expl3 syntax is again turned
   % off to continue with "normal" LaTeX2e syntax.
-
-  \ExplSyntaxOn \bool_new:N\g__acro_rerun_bool \ExplSyntaxOff
+  \@ifundefined{g__acro_rerun_bool}
+  {%
+     \ExplSyntaxOn \bool_new:N\g__acro_rerun_bool \ExplSyntaxOff
+  }{}
 
   % In publications of the FAU University Press the acronyms can be split in
   % two parts, namely the abbreviations and symbols. They shall have tabular
