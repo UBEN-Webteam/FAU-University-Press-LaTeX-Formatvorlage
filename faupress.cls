@@ -1092,6 +1092,7 @@
     \protect\renewcommand\protect\chaptertocstyle{\normalsize}%
   }%
 }
+\let\rememberchapterdef\chapter % save chapter command
 \g@addto@macro\appendix{%
   \addtocontents{toc}{%
     \vspace*{0.25em}
@@ -1099,7 +1100,6 @@
     \protect\renewcommand\protect\chaptertocstyle{\small}%
   }%
   \addchap{\appendixname}%
-  \let\rememberchapterdef\chapter
   \let\chapter\relax
   \renewcommand*\thesection{\@Alph\c@section}
 }
