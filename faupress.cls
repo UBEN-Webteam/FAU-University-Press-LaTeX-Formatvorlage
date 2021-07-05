@@ -1070,7 +1070,7 @@
 % Numbering up to \subsubsection
 \setcounter{secnumdepth}{3}
 % Command for fixed indentation of the sectioning commands
-\newcommand*{\@fausectioning}[1]{\makebox[1.1cm][l]{#1}}
+\newcommand*{\@fausectioning}[1]{\makebox[1.3cm][l]{#1}}
 % Alignment of sections
 \renewcommand*{\chapterformat}{%
   \@fausectioning{\chapappifchapterprefix{\nobreakspace}\thechapter\autodot}}
