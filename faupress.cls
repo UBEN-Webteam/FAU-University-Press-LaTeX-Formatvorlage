@@ -697,36 +697,18 @@
 % selected with the option german. In the babel package the same option is
 % called ngerman.
 
-\ifluatex
-  
-  \RequirePackage{polyglossia} % 2020/04/08 v1.49
-    
-  \iffaupress@german
-    \setdefaultlanguage{german}
-    \setotherlanguage{english}
-  \fi
-  
-  \iffaupress@english
-    \setdefaultlanguage{english}
-    \setotherlanguage{german}
-  \fi
+\iffaupress@german
+  \RequirePackage[
+    english,
+    ngerman
+  ]{babel} % 2020/06/10 3.45
+\fi
 
-\else
-  
-  \iffaupress@german
-    \RequirePackage[
-      english,
-      ngerman
-    ]{babel} % 2020/06/10 3.45
-  \fi
-  
-  \iffaupress@english
-    \RequirePackage[
-      ngerman,
-      english
-    ]{babel} % 2020/06/10 3.45
-  \fi
-
+\iffaupress@english
+  \RequirePackage[
+    ngerman,
+    english
+  ]{babel} % 2020/06/10 3.45
 \fi
 
 % Specific keywords used in a document are set automatically by LaTeX (e.g. the
@@ -748,59 +730,31 @@
 % To stabilze changes made in the packages also the keywords that remain
 % unchanged are renewed.
 
-\ifluatex
 
-  \addto\captionsgerman{%
-    \def\prefacename{Vorwort}                % unchanged, original: Vorwort
-    \def\refname{Literatur}                  % unchanged, original: Literatur
-    \def\abstractname{Zusammenfassung}       % unchanged, original: Zusammenfassung
-    \def\bibname{Literaturverzeichnis}       % unchanged, original: Literaturverzeichnis
-    \def\chaptername{Kapitel}                % unchanged, original: Kapitel
-    \def\appendixname{Anhang}                % unchanged, original: Anhang
-    \def\contentsname{Inhaltsverzeichnis}    % unchanged, original: Inhaltsverzeichnis
-    \def\listfigurename{Bildverzeichnis}     % changed,   original: Abbildungsverzeichnis
-    \def\listtablename{Tabellenverzeichnis}  % unchanged, original: Tabellenverzeichnis
-    \def\indexname{Index}                    % unchanged, original: Index
-    \def\figurename{Bild}                    % changed,   original: Abbildung
-    \def\tablename{Tabelle}                  % unchanged, original: Tabelle
-    \def\partname{Teil}                      % unchanged, original: Teil
-    \def\enclname{Anlage(n)}                 % unchanged, original: Anlage(n)
-    \def\ccname{Verteiler}                   % unchanged, original: Verteiler
-    \def\headtoname{An}                      % unchanged, original: An
-    \def\pagename{Seite}                     % unchanged, original: Seite
-    \def\seename{siehe}                      % unchanged, original: siehe
-    \def\alsoname{siehe auch}                % unchanged, original: siehe auch
-    \def\proofname{Beweis}                   % unchanged, original: Beweis
-    \def\glossaryname{Glossar}               % unchanged, original: Glossar
-  }
+\addto\captionsngerman{%
+  \def\prefacename{Vorwort}                % unchanged, original: Vorwort
+  \def\refname{Literatur}                  % unchanged, original: Literatur
+  \def\abstractname{Zusammenfassung}       % unchanged, original: Zusammenfassung
+  \def\bibname{Literaturverzeichnis}       % unchanged, original: Literaturverzeichnis
+  \def\chaptername{Kapitel}                % unchanged, original: Kapitel
+  \def\appendixname{Anhang}                % unchanged, original: Anhang
+  \def\contentsname{Inhaltsverzeichnis}    % unchanged, original: Inhaltsverzeichnis
+  \def\listfigurename{Bildverzeichnis}     % changed,   original: Abbildungsverzeichnis
+  \def\listtablename{Tabellenverzeichnis}  % unchanged, original: Tabellenverzeichnis
+  \def\indexname{Index}                    % unchanged, original: Index
+  \def\figurename{Bild}                    % changed,   original: Abbildung
+  \def\tablename{Tabelle}                  % unchanged, original: Tabelle
+  \def\partname{Teil}                      % unchanged, original: Teil
+  \def\enclname{Anlage(n)}                 % unchanged, original: Anlage(n)
+  \def\ccname{Verteiler}                   % unchanged, original: Verteiler
+  \def\headtoname{An}                      % unchanged, original: An
+  \def\pagename{Seite}                     % unchanged, original: Seite
+  \def\seename{siehe}                      % unchanged, original: siehe
+  \def\alsoname{siehe auch}                % unchanged, original: siehe auch
+  \def\proofname{Beweis}                   % unchanged, original: Beweis
+  \def\glossaryname{Glossar}               % unchanged, original: Glossar
+}
 
-\else
-
-  \addto\captionsngerman{%
-    \def\prefacename{Vorwort}                % unchanged, original: Vorwort
-    \def\refname{Literatur}                  % unchanged, original: Literatur
-    \def\abstractname{Zusammenfassung}       % unchanged, original: Zusammenfassung
-    \def\bibname{Literaturverzeichnis}       % unchanged, original: Literaturverzeichnis
-    \def\chaptername{Kapitel}                % unchanged, original: Kapitel
-    \def\appendixname{Anhang}                % unchanged, original: Anhang
-    \def\contentsname{Inhaltsverzeichnis}    % unchanged, original: Inhaltsverzeichnis
-    \def\listfigurename{Bildverzeichnis}     % changed,   original: Abbildungsverzeichnis
-    \def\listtablename{Tabellenverzeichnis}  % unchanged, original: Tabellenverzeichnis
-    \def\indexname{Index}                    % unchanged, original: Index
-    \def\figurename{Bild}                    % changed,   original: Abbildung
-    \def\tablename{Tabelle}                  % unchanged, original: Tabelle
-    \def\partname{Teil}                      % unchanged, original: Teil
-    \def\enclname{Anlage(n)}                 % unchanged, original: Anlage(n)
-    \def\ccname{Verteiler}                   % unchanged, original: Verteiler
-    \def\headtoname{An}                      % unchanged, original: An
-    \def\pagename{Seite}                     % unchanged, original: Seite
-    \def\seename{siehe}                      % unchanged, original: siehe
-    \def\alsoname{siehe auch}                % unchanged, original: siehe auch
-    \def\proofname{Beweis}                   % unchanged, original: Beweis
-    \def\glossaryname{Glossar}               % unchanged, original: Glossar
-  }
-
-\fi
 
 \addto\HyLang@german{%
   \def\equationautorefname{Gleichung}                 % unchanged, original: Gleichung
@@ -869,45 +823,23 @@
 % of those headings have anything to do with counters, no extensions of
 % \HyLang@german or \HyLang@english are required.
 
-\ifluatex
 
-  \addto\captionsgerman{%
-    \def\introductionname{Einleitung}%
-    \def\acroname{Formelzeichen- und Abkürzungsverzeichnis}%
-    \def\listabbrname{Abkürzungsverzeichnis}%
-    \def\listsymbolname{Formelzeichenverzeichnis}%
-    \def\abbrname{Abkürzung}%
-    \def\descriptionname{Beschreibung}%
-    \def\unitname{Einheit}%
-    \def\symbolname{Symbol}%
-    \def\mainbibname{Literaturverzeichnis}%
-    \def\ownbibname{Verzeichnis promotionsbezogener, eigener Publikationen}%
-    \def\studentbibname{Verzeichnis promotionsbezogener, studentischer Arbeiten}%
-    \def\bibasterisk{Der Autor an zweiter (und ggf. dritter) Stelle bezeichnet
-      den bzw. die Betreuer der studentischen Arbeit und an letztgenannter Stelle
-      den/die Lehrstuhlinhaber/in.}%
-  }
-
-\else
-
-  \addto\captionsngerman{%
-    \def\introductionname{Einleitung}%
-    \def\acroname{Formelzeichen- und Abkürzungsverzeichnis}%
-    \def\listabbrname{Abkürzungsverzeichnis}%
-    \def\listsymbolname{Formelzeichenverzeichnis}%
-    \def\abbrname{Abkürzung}%
-    \def\descriptionname{Beschreibung}%
-    \def\unitname{Einheit}%
-    \def\symbolname{Symbol}%
-    \def\mainbibname{Literaturverzeichnis}%
-    \def\ownbibname{Verzeichnis promotionsbezogener, eigener Publikationen}%
-    \def\studentbibname{Verzeichnis promotionsbezogener, studentischer Arbeiten}%
-    \def\bibasterisk{Der Autor an zweiter (und ggf. dritter) Stelle bezeichnet
-      den bzw. die Betreuer der studentischen Arbeit und an letztgenannter Stelle
-      den/die Lehrstuhlinhaber/in.}%
-  }
-
-\fi
+\addto\captionsngerman{%
+  \def\introductionname{Einleitung}%
+  \def\acroname{Formelzeichen- und Abkürzungsverzeichnis}%
+  \def\listabbrname{Abkürzungsverzeichnis}%
+  \def\listsymbolname{Formelzeichenverzeichnis}%
+  \def\abbrname{Abkürzung}%
+  \def\descriptionname{Beschreibung}%
+  \def\unitname{Einheit}%
+  \def\symbolname{Symbol}%
+  \def\mainbibname{Literaturverzeichnis}%
+  \def\ownbibname{Verzeichnis promotionsbezogener, eigener Publikationen}%
+  \def\studentbibname{Verzeichnis promotionsbezogener, studentischer Arbeiten}%
+  \def\bibasterisk{Der Autor an zweiter (und ggf. dritter) Stelle bezeichnet
+    den bzw. die Betreuer der studentischen Arbeit und an letztgenannter Stelle
+    den/die Lehrstuhlinhaber/in.}%
+}
 
 \addto\captionsenglish{%
   \def\introductionname{Introduction}%
@@ -1041,11 +973,7 @@
 % letters of a word or within the last four letters of a word is allowed. With
 % these settings in English and in German no hyphenation of words shorter
 
-\ifluatex
-  \renewcommand\germanhyphenmins{33}  % default settings are 22
-\else
-  \renewcommand\ngermanhyphenmins{33} % default settings are 23
-\fi
+\renewcommand\ngermanhyphenmins{33} % default settings are 23
 \renewcommand\englishhyphenmins{33}   % default settings are 23
 
 % hyphenation can be used to define the hyphenation of words that are not
