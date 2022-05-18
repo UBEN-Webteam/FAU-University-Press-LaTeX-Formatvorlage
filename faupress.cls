@@ -899,12 +899,14 @@
 % there will be a version 3 that will change the package significantly and add
 % the required compatibilities for unicode-math.
 
-\RequirePackage{siunitx} % 2020/02/25 v2.8b
+\RequirePackage[
+  % locale = US, % local as first argument! 
+]{siunitx} % 2020/02/25 v2.8b
   
   \AtBeginDocument{%
     \sisetup{%
-      detect-all = true,%
-      detect-display-math = true,%
+      mode=text,
+      % detect-all = true,%
     }%
   }%
 
@@ -938,10 +940,6 @@
     \setmathfont[
       Path           = fonts/,
     ]{cambria-math.ttf}
-
-    \unimathsetup{
-      mathrm = sym
-    }
 
 \else 
 
