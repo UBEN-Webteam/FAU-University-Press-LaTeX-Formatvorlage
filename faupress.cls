@@ -1171,16 +1171,6 @@
   \setlength{\parindent}{1em}
 \fi
 
-% lists
-
-\RequirePackage{enumitem} % 2019/06/20 v3.9
-
-\setlist[itemize]{leftmargin = 2\baselineskip, itemindent = 0pt, labelsep = 0.5\baselineskip}
-\setlist[itemize, 1]{label = \raisebox{0.11\baselineskip}{\scalebox{0.4333}{$\blacksquare$}}}
-% blacksqaure of AMS was fitted to look like normal bullet
-\setlist[itemize, 2]{label = $\bullet$}
-\setlist[itemize, 3]{label = $\bullet$}
-\setlist[itemize, 4]{label = $\bullet$}
 
 % counter
 
@@ -1786,8 +1776,8 @@
 \newcommand*\lastname[1]{\gdef\@lastname{#1}}
 \newcommand\@lastname{\@latex@error{No \noexpand\lastname given}\@ehc}
 
-\newcommand*\degree[1]{\gdef\@degree{#1}}
-\newcommand\@degree{\@latex@error{no \noexpand\degree given}\@ehc}
+% \newcommand*\degree[1]{\gdef\@degree{#1}}
+% \newcommand\@degree{\@latex@error{no \noexpand\degree given}\@ehc}
 
 \newcommand*\origin[1]{\gdef\@origin{#1}}
 \newcommand\@origin{\@latex@error{No \noexpand\origin given}\@ehc}
@@ -1977,7 +1967,7 @@
     \vspace{34mm}
     {\usekomafont{faculty} vorgelegt von \par}
       \vspace{6.2mm}
-    {\usekomafont{faculty} \@firstname\ \@lastname, \@degree \par}
+    {\usekomafont{faculty} \@firstname\ \@lastname \par}
       \vspace{6.2mm}
     {\usekomafont{faculty} aus \@origin \par}
     \vskip38mm
@@ -2023,6 +2013,17 @@
     pdfsubject = {\@subject},
     pdfkeywords = {\@keywords}
   }
+  % lists
+
+  \usepackage{enumitem} % 2019/06/20 v3.9
+
+  \setlist[itemize]{leftmargin = 2\baselineskip, itemindent = 0pt, labelsep = 0.5\baselineskip}
+  \setlist[itemize, 1]{label = \raisebox{0.11\baselineskip}{\scalebox{0.4333}{$\blacksquare$}}}
+  % blacksqaure of AMS was fitted to look like normal bullet
+  \setlist[itemize, 2]{label = $\bullet$}
+  \setlist[itemize, 3]{label = $\bullet$}
+  \setlist[itemize, 4]{label = $\bullet$}
+  \setlist[description]{font=\normalfont\bfseries}
 }
 
 % Supress widows and orphans
