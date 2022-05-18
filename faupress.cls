@@ -613,10 +613,11 @@
 % user in the individual preamble via \KOMAoptions.
 
 \KOMAoptions{
-  listof   = totoc,
-  toc      = chapterentrydotfill,
-  captions = tableheading,
-  captions = figuresignature,
+  listof   = totoc, % toc eintrag für list of figures und list of tables
+  toc      = chapterentrydotfill, % punkte zwischen toc-text und seite
+  captions = tableheading, % format table captions for top positioning
+  captions = figuresignature, % format figure captions for head positioning
+  numbers = noenddot, % no dots at end of heading numbers
 }
 
 
