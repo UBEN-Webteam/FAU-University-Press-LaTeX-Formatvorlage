@@ -862,7 +862,7 @@
 % polyglossia. Further package options can be passed to it in the usual way by
 % using \PassOptionsToPackage before loading this class.
 
-\RequirePackage{csquotes} % 2019-12-06 v5.2j
+\RequirePackage[autostyle,autopunct=true]{csquotes} % 2019-12-06 v5.2j
 
 %%% MATH & SCIENCE %%%
 
