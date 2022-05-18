@@ -934,7 +934,8 @@
     ]{constantia.ttf}
 
   \RequirePackage[
-    bold-style = ISO
+    bold-style = ISO,
+    warnings-off={mathtools-colon,mathtools-overbracket}
   ]{unicode-math} % 2020/01/31 v0.8q
  
     \setmathfont[
@@ -1102,9 +1103,8 @@
 
 
 % counter
-
+% make numbering of figures and equations continuous instead of per-chapter:
 \RequirePackage{chngcntr} % 2018/04/09 v1.1a
-
 \counterwithout{figure}{chapter}
 \counterwithout{table}{chapter}
 \counterwithout{equation}{chapter}
