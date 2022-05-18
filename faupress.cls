@@ -1692,6 +1692,7 @@
   }
 \RequirePackage{nameref} % 2019/09/16 v2.46
 \RequirePackage{bookmark} % 2019/12/03 v1.28
+\urlstyle{same} % prints hyperlinks in main font (also in bibliography)
 
 %%%%%%%%%%%%%%%%%
 %%% TITLEPAGE %%%
@@ -1971,6 +1972,8 @@
 \clubpenalty = 10000
 \widowpenalty = 10000
 \displaywidowpenalty = 10000
+% Avoid hyphenation across pages:
+\brokenpenalty10000
 % Allow ragged page bottoms
 \raggedbottom
 \listfiles
