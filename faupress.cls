@@ -600,7 +600,7 @@
 % This class shall be based on the KOMA script and more specifically on the
 % scrbook class, which is loaded here.
 
-\LoadClass{scrbook} % 2020/04/19 v3.30
+\LoadClass[headings=normal]{scrbook} % 2020/04/19 v3.30
 
 % Some packages from other authors do not work well with KOMA-Script.  The
 % scrhack package alters the commands and definitions of other packages to work
@@ -628,7 +628,7 @@
 % required by FAU Univeristy Press are impossible to achieve with the KOMA
 % classes. 
 
-\RequirePackage{geometry} % 2020/01/02 v5.9
+\RequirePackage[]{geometry} % 2020/01/02 v5.9, option: showframe
 
 \iffaupress@studienpartitur
   \geometry{
@@ -638,7 +638,7 @@
     bottom       =     20mm,
     inner        =     25mm,
     outer        =     20mm,
-    headheight   =      1em,
+    headheight   =   13.6pt, % originally 1em -> warning and automatically changed
     headsep      = 15mm-1em,
     footskip     =    7.5mm,
     %showframe,  
@@ -652,7 +652,7 @@
     bottom       =     18mm,
     inner        =     23mm,
     outer        =     18mm,
-    headheight   =      1em,
+    headheight   =   10.0pt, % originally 1em -> warning and automatically changed
     headsep      = 13mm-1em,
     footskip     =      8mm,
     %showframe,  
@@ -1117,23 +1117,25 @@
 
 \RedeclareSectionCommand[
   afterindent    = false,
-  beforeskip     = 0pt,
-  afterskip      = 0.75\baselineskip,
+  beforeskip     = 6pt,
+  afterskip      = 18pt,
   tocbeforeskip  = 0.6\baselineskip,
-  font           = \LARGE,
+  % font         = \LARGE,
 ]{chapter}
 \RedeclareSectionCommand[
   afterindent    = false,
-  beforeskip     = 0.75\baselineskip,
-  afterskip      = 0.01pt,
+  beforeskip     = 12pt,
+  afterskip      = 6pt,
   tocbeforeskip  = 0.25\baselineskip,
+  % font           = \Large,
   tocentryformat = \small,
 ]{section}
 \RedeclareSectionCommand[
   afterindent    = false,
-  beforeskip     = 0.75\baselineskip,
-  afterskip      = 0.01pt,
+  beforeskip     = 12pt,
+  afterskip      = 3pt,
   tocbeforeskip  = 0pt,
+  % font           = \large,
   tocentryformat = \small,
 ]{subsection}
 \RedeclareSectionCommand[
@@ -1153,8 +1155,8 @@
   beforeskip     = 0.50\baselineskip,
   afterskip      = 1em,
 ]{subparagraph}  
-\addtokomafont{pagehead}{\footnotesize}
-\addtokomafont{pagefoot}{\footnotesize}
+\addtokomafont{pagehead}{\small}
+\addtokomafont{pagefoot}{\small}
 
 \iffaupress@parskip
   \setlength{\parskip}{1\baselineskip}
@@ -2006,6 +2008,7 @@
       \input{acronyms/acronym-symbol.ac}
     \fi 
   \fi 
+  
   % Adds author, title, subject, keywords to PDF metadata
   \hypersetup{
     pdfauthor = {\@firstname~\@lastname},
@@ -2013,6 +2016,15 @@
     pdfsubject = {\@subject},
     pdfkeywords = {\@keywords}
   }
+
+  %% RESIZE fonts
+  %% redefine size of fonts so that headings fulfill the format requirements
+  \makeatletter %only needed in preamble
+  \renewcommand\LARGE{\@setfontsize\LARGE{16pt}{19.2}}
+  \renewcommand\Large{\@setfontsize\Large{13pt}{15.6}}
+  \renewcommand\large{\@setfontsize\large{12pt}{14.4}}
+  \makeatother
+
   % lists
 
   \usepackage{enumitem} % 2019/06/20 v3.9
