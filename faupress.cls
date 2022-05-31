@@ -600,7 +600,7 @@
 % This class shall be based on the KOMA script and more specifically on the
 % scrbook class, which is loaded here.
 
-\LoadClass{scrbook} % 2020/04/19 v3.30
+\LoadClass[headings=normal]{scrbook} % 2020/04/19 v3.30
 
 % Some packages from other authors do not work well with KOMA-Script.  The
 % scrhack package alters the commands and definitions of other packages to work
@@ -613,10 +613,11 @@
 % user in the individual preamble via \KOMAoptions.
 
 \KOMAoptions{
-  listof   = totoc,
-  toc      = chapterentrydotfill,
-  captions = tableheading,
-  captions = figuresignature,
+  listof   = totoc, % toc eintrag für list of figures und list of tables
+  toc      = chapterentrydotfill, % punkte zwischen toc-text und seite
+  captions = tableheading, % format table captions for top positioning
+  captions = figuresignature, % format figure captions for head positioning
+  numbers = noenddot, % no dots at end of heading numbers
 }
 
 
@@ -628,7 +629,7 @@
 % required by FAU Univeristy Press are impossible to achieve with the KOMA
 % classes. 
 
-\RequirePackage{geometry} % 2020/01/02 v5.9
+\RequirePackage[]{geometry} % 2020/01/02 v5.9, option: showframe
 
 \iffaupress@studienpartitur
   \geometry{
@@ -638,7 +639,7 @@
     bottom       =     20mm,
     inner        =     25mm,
     outer        =     20mm,
-    headheight   =      1em,
+    headheight   =   13.6pt, % originally 1em -> warning and automatically changed
     headsep      = 15mm-1em,
     footskip     =    7.5mm,
     %showframe,  
@@ -652,7 +653,7 @@
     bottom       =     18mm,
     inner        =     23mm,
     outer        =     18mm,
-    headheight   =      1em,
+    headheight   =   10.0pt, % originally 1em -> warning and automatically changed
     headsep      = 13mm-1em,
     footskip     =      8mm,
     %showframe,  
@@ -696,36 +697,18 @@
 % selected with the option german. In the babel package the same option is
 % called ngerman.
 
-\ifluatex
-  
-  \RequirePackage{polyglossia} % 2020/04/08 v1.49
-    
-  \iffaupress@german
-    \setdefaultlanguage{german}
-    \setotherlanguage{english}
-  \fi
-  
-  \iffaupress@english
-    \setdefaultlanguage{english}
-    \setotherlanguage{german}
-  \fi
+\iffaupress@german
+  \RequirePackage[
+    english,
+    ngerman
+  ]{babel} % 2020/06/10 3.45
+\fi
 
-\else
-  
-  \iffaupress@german
-    \RequirePackage[
-      english,
-      ngerman
-    ]{babel} % 2020/06/10 3.45
-  \fi
-  
-  \iffaupress@english
-    \RequirePackage[
-      ngerman,
-      english
-    ]{babel} % 2020/06/10 3.45
-  \fi
-
+\iffaupress@english
+  \RequirePackage[
+    ngerman,
+    english
+  ]{babel} % 2020/06/10 3.45
 \fi
 
 % Specific keywords used in a document are set automatically by LaTeX (e.g. the
@@ -747,59 +730,31 @@
 % To stabilze changes made in the packages also the keywords that remain
 % unchanged are renewed.
 
-\ifluatex
 
-  \addto\captionsgerman{%
-    \def\prefacename{Vorwort}                % unchanged, original: Vorwort
-    \def\refname{Literatur}                  % unchanged, original: Literatur
-    \def\abstractname{Zusammenfassung}       % unchanged, original: Zusammenfassung
-    \def\bibname{Literaturverzeichnis}       % unchanged, original: Literaturverzeichnis
-    \def\chaptername{Kapitel}                % unchanged, original: Kapitel
-    \def\appendixname{Anhang}                % unchanged, original: Anhang
-    \def\contentsname{Inhaltsverzeichnis}    % unchanged, original: Inhaltsverzeichnis
-    \def\listfigurename{Bildverzeichnis}     % changed,   original: Abbildungsverzeichnis
-    \def\listtablename{Tabellenverzeichnis}  % unchanged, original: Tabellenverzeichnis
-    \def\indexname{Index}                    % unchanged, original: Index
-    \def\figurename{Bild}                    % changed,   original: Abbildung
-    \def\tablename{Tabelle}                  % unchanged, original: Tabelle
-    \def\partname{Teil}                      % unchanged, original: Teil
-    \def\enclname{Anlage(n)}                 % unchanged, original: Anlage(n)
-    \def\ccname{Verteiler}                   % unchanged, original: Verteiler
-    \def\headtoname{An}                      % unchanged, original: An
-    \def\pagename{Seite}                     % unchanged, original: Seite
-    \def\seename{siehe}                      % unchanged, original: siehe
-    \def\alsoname{siehe auch}                % unchanged, original: siehe auch
-    \def\proofname{Beweis}                   % unchanged, original: Beweis
-    \def\glossaryname{Glossar}               % unchanged, original: Glossar
-  }
+\addto\captionsngerman{%
+  \def\prefacename{Vorwort}                % unchanged, original: Vorwort
+  \def\refname{Literatur}                  % unchanged, original: Literatur
+  \def\abstractname{Zusammenfassung}       % unchanged, original: Zusammenfassung
+  \def\bibname{Literaturverzeichnis}       % unchanged, original: Literaturverzeichnis
+  \def\chaptername{Kapitel}                % unchanged, original: Kapitel
+  \def\appendixname{Anhang}                % unchanged, original: Anhang
+  \def\contentsname{Inhaltsverzeichnis}    % unchanged, original: Inhaltsverzeichnis
+  \def\listfigurename{Bildverzeichnis}     % changed,   original: Abbildungsverzeichnis
+  \def\listtablename{Tabellenverzeichnis}  % unchanged, original: Tabellenverzeichnis
+  \def\indexname{Index}                    % unchanged, original: Index
+  \def\figurename{Bild}                    % changed,   original: Abbildung
+  \def\tablename{Tabelle}                  % unchanged, original: Tabelle
+  \def\partname{Teil}                      % unchanged, original: Teil
+  \def\enclname{Anlage(n)}                 % unchanged, original: Anlage(n)
+  \def\ccname{Verteiler}                   % unchanged, original: Verteiler
+  \def\headtoname{An}                      % unchanged, original: An
+  \def\pagename{Seite}                     % unchanged, original: Seite
+  \def\seename{siehe}                      % unchanged, original: siehe
+  \def\alsoname{siehe auch}                % unchanged, original: siehe auch
+  \def\proofname{Beweis}                   % unchanged, original: Beweis
+  \def\glossaryname{Glossar}               % unchanged, original: Glossar
+}
 
-\else
-
-  \addto\captionsngerman{%
-    \def\prefacename{Vorwort}                % unchanged, original: Vorwort
-    \def\refname{Literatur}                  % unchanged, original: Literatur
-    \def\abstractname{Zusammenfassung}       % unchanged, original: Zusammenfassung
-    \def\bibname{Literaturverzeichnis}       % unchanged, original: Literaturverzeichnis
-    \def\chaptername{Kapitel}                % unchanged, original: Kapitel
-    \def\appendixname{Anhang}                % unchanged, original: Anhang
-    \def\contentsname{Inhaltsverzeichnis}    % unchanged, original: Inhaltsverzeichnis
-    \def\listfigurename{Bildverzeichnis}     % changed,   original: Abbildungsverzeichnis
-    \def\listtablename{Tabellenverzeichnis}  % unchanged, original: Tabellenverzeichnis
-    \def\indexname{Index}                    % unchanged, original: Index
-    \def\figurename{Bild}                    % changed,   original: Abbildung
-    \def\tablename{Tabelle}                  % unchanged, original: Tabelle
-    \def\partname{Teil}                      % unchanged, original: Teil
-    \def\enclname{Anlage(n)}                 % unchanged, original: Anlage(n)
-    \def\ccname{Verteiler}                   % unchanged, original: Verteiler
-    \def\headtoname{An}                      % unchanged, original: An
-    \def\pagename{Seite}                     % unchanged, original: Seite
-    \def\seename{siehe}                      % unchanged, original: siehe
-    \def\alsoname{siehe auch}                % unchanged, original: siehe auch
-    \def\proofname{Beweis}                   % unchanged, original: Beweis
-    \def\glossaryname{Glossar}               % unchanged, original: Glossar
-  }
-
-\fi
 
 \addto\HyLang@german{%
   \def\equationautorefname{Gleichung}                 % unchanged, original: Gleichung
@@ -868,45 +823,23 @@
 % of those headings have anything to do with counters, no extensions of
 % \HyLang@german or \HyLang@english are required.
 
-\ifluatex
 
-  \addto\captionsgerman{%
-    \def\introductionname{Einleitung}%
-    \def\acroname{Formelzeichen- und Abkürzungsverzeichnis}%
-    \def\listabbrname{Abkürzungsverzeichnis}%
-    \def\listsymbolname{Formelzeichenverzeichnis}%
-    \def\abbrname{Abkürzung}%
-    \def\descriptionname{Beschreibung}%
-    \def\unitname{Einheit}%
-    \def\symbolname{Symbol}%
-    \def\mainbibname{Literaturverzeichnis}%
-    \def\ownbibname{Verzeichnis promotionsbezogener, eigener Publikationen}%
-    \def\studentbibname{Verzeichnis promotionsbezogener, studentischer Arbeiten}%
-    \def\bibasterisk{Der Autor an zweiter (und ggf. dritter) Stelle bezeichnet
-      den bzw. die Betreuer der studentischen Arbeit und an letztgenannter Stelle
-      den/die Lehrstuhlinhaber/in.}%
-  }
-
-\else
-
-  \addto\captionsngerman{%
-    \def\introductionname{Einleitung}%
-    \def\acroname{Formelzeichen- und Abkürzungsverzeichnis}%
-    \def\listabbrname{Abkürzungsverzeichnis}%
-    \def\listsymbolname{Formelzeichenverzeichnis}%
-    \def\abbrname{Abkürzung}%
-    \def\descriptionname{Beschreibung}%
-    \def\unitname{Einheit}%
-    \def\symbolname{Symbol}%
-    \def\mainbibname{Literaturverzeichnis}%
-    \def\ownbibname{Verzeichnis promotionsbezogener, eigener Publikationen}%
-    \def\studentbibname{Verzeichnis promotionsbezogener, studentischer Arbeiten}%
-    \def\bibasterisk{Der Autor an zweiter (und ggf. dritter) Stelle bezeichnet
-      den bzw. die Betreuer der studentischen Arbeit und an letztgenannter Stelle
-      den/die Lehrstuhlinhaber/in.}%
-  }
-
-\fi
+\addto\captionsngerman{%
+  \def\introductionname{Einleitung}%
+  \def\acroname{Formelzeichen- und Abkürzungsverzeichnis}%
+  \def\listabbrname{Abkürzungsverzeichnis}%
+  \def\listsymbolname{Formelzeichenverzeichnis}%
+  \def\abbrname{Abkürzung}%
+  \def\descriptionname{Beschreibung}%
+  \def\unitname{Einheit}%
+  \def\symbolname{Symbol}%
+  \def\mainbibname{Literaturverzeichnis}%
+  \def\ownbibname{Verzeichnis promotionsbezogener, eigener Publikationen}%
+  \def\studentbibname{Verzeichnis promotionsbezogener, studentischer Arbeiten}%
+  \def\bibasterisk{Der Autor an zweiter (und ggf. dritter) Stelle bezeichnet
+    den bzw. die Betreuer der studentischen Arbeit und an letztgenannter Stelle
+    den/die Lehrstuhlinhaber/in.}%
+}
 
 \addto\captionsenglish{%
   \def\introductionname{Introduction}%
@@ -929,7 +862,7 @@
 % polyglossia. Further package options can be passed to it in the usual way by
 % using \PassOptionsToPackage before loading this class.
 
-\RequirePackage{csquotes} % 2019-12-06 v5.2j
+\RequirePackage[autostyle,autopunct=true]{csquotes} % 2019-12-06 v5.2j
 
 %%% MATH & SCIENCE %%%
 
@@ -966,12 +899,14 @@
 % there will be a version 3 that will change the package significantly and add
 % the required compatibilities for unicode-math.
 
-\RequirePackage{siunitx} % 2020/02/25 v2.8b
+\RequirePackage[
+  % locale = US, % local as first argument! 
+]{siunitx} % 2020/02/25 v2.8b
   
   \AtBeginDocument{%
     \sisetup{%
-      detect-all = true,%
-      detect-display-math = true,%
+      mode=text,
+      % detect-all = true,%
     }%
   }%
 
@@ -999,16 +934,13 @@
     ]{constantia.ttf}
 
   \RequirePackage[
-    bold-style = ISO
+    bold-style = ISO,
+    warnings-off={mathtools-colon,mathtools-overbracket}
   ]{unicode-math} % 2020/01/31 v0.8q
  
     \setmathfont[
       Path           = fonts/,
     ]{cambria-math.ttf}
-
-    \unimathsetup{
-      mathrm = sym
-    }
 
 \else 
 
@@ -1040,11 +972,7 @@
 % letters of a word or within the last four letters of a word is allowed. With
 % these settings in English and in German no hyphenation of words shorter
 
-\ifluatex
-  \renewcommand\germanhyphenmins{33}  % default settings are 22
-\else
-  \renewcommand\ngermanhyphenmins{33} % default settings are 23
-\fi
+\renewcommand\ngermanhyphenmins{33} % default settings are 23
 \renewcommand\englishhyphenmins{33}   % default settings are 23
 
 % hyphenation can be used to define the hyphenation of words that are not
@@ -1117,23 +1045,25 @@
 
 \RedeclareSectionCommand[
   afterindent    = false,
-  beforeskip     = 0pt,
-  afterskip      = 0.75\baselineskip,
+  beforeskip     = 6pt,
+  afterskip      = 18pt,
   tocbeforeskip  = 0.6\baselineskip,
-  font           = \LARGE,
+  % font         = \LARGE,
 ]{chapter}
 \RedeclareSectionCommand[
   afterindent    = false,
-  beforeskip     = 0.75\baselineskip,
-  afterskip      = 0.01pt,
+  beforeskip     = 12pt,
+  afterskip      = 6pt,
   tocbeforeskip  = 0.25\baselineskip,
+  % font           = \Large,
   tocentryformat = \small,
 ]{section}
 \RedeclareSectionCommand[
   afterindent    = false,
-  beforeskip     = 0.75\baselineskip,
-  afterskip      = 0.01pt,
+  beforeskip     = 12pt,
+  afterskip      = 3pt,
   tocbeforeskip  = 0pt,
+  % font           = \large,
   tocentryformat = \small,
 ]{subsection}
 \RedeclareSectionCommand[
@@ -1153,8 +1083,8 @@
   beforeskip     = 0.50\baselineskip,
   afterskip      = 1em,
 ]{subparagraph}  
-\addtokomafont{pagehead}{\footnotesize}
-\addtokomafont{pagefoot}{\footnotesize}
+\addtokomafont{pagehead}{\small}
+\addtokomafont{pagefoot}{\small}
 
 \iffaupress@parskip
   \setlength{\parskip}{1\baselineskip}
@@ -1171,21 +1101,10 @@
   \setlength{\parindent}{1em}
 \fi
 
-% lists
-
-\RequirePackage{enumitem} % 2019/06/20 v3.9
-
-\setlist[itemize]{leftmargin = 2\baselineskip, itemindent = 0pt, labelsep = 0.5\baselineskip}
-\setlist[itemize, 1]{label = \raisebox{0.11\baselineskip}{\scalebox{0.4333}{$\blacksquare$}}}
-% blacksqaure of AMS was fitted to look like normal bullet
-\setlist[itemize, 2]{label = $\bullet$}
-\setlist[itemize, 3]{label = $\bullet$}
-\setlist[itemize, 4]{label = $\bullet$}
 
 % counter
-
+% make numbering of figures and equations continuous instead of per-chapter:
 \RequirePackage{chngcntr} % 2018/04/09 v1.1a
-
 \counterwithout{figure}{chapter}
 \counterwithout{table}{chapter}
 \counterwithout{equation}{chapter}
@@ -1771,6 +1690,7 @@
   }
 \RequirePackage{nameref} % 2019/09/16 v2.46
 \RequirePackage{bookmark} % 2019/12/03 v1.28
+\urlstyle{same} % prints hyperlinks in main font (also in bibliography)
 
 %%%%%%%%%%%%%%%%%
 %%% TITLEPAGE %%%
@@ -1786,8 +1706,8 @@
 \newcommand*\lastname[1]{\gdef\@lastname{#1}}
 \newcommand\@lastname{\@latex@error{No \noexpand\lastname given}\@ehc}
 
-\newcommand*\degree[1]{\gdef\@degree{#1}}
-\newcommand\@degree{\@latex@error{no \noexpand\degree given}\@ehc}
+% \newcommand*\degree[1]{\gdef\@degree{#1}}
+% \newcommand\@degree{\@latex@error{no \noexpand\degree given}\@ehc}
 
 \newcommand*\origin[1]{\gdef\@origin{#1}}
 \newcommand\@origin{\@latex@error{No \noexpand\origin given}\@ehc}
@@ -1977,7 +1897,7 @@
     \vspace{34mm}
     {\usekomafont{faculty} vorgelegt von \par}
       \vspace{6.2mm}
-    {\usekomafont{faculty} \@firstname\ \@lastname, \@degree \par}
+    {\usekomafont{faculty} \@firstname\ \@lastname \par}
       \vspace{6.2mm}
     {\usekomafont{faculty} aus \@origin \par}
     \vskip38mm
@@ -2016,6 +1936,7 @@
       \input{acronyms/acronym-symbol.ac}
     \fi 
   \fi 
+  
   % Adds author, title, subject, keywords to PDF metadata
   \hypersetup{
     pdfauthor = {\@firstname~\@lastname},
@@ -2023,12 +1944,34 @@
     pdfsubject = {\@subject},
     pdfkeywords = {\@keywords}
   }
+
+  %% RESIZE fonts
+  %% redefine size of fonts so that headings fulfill the format requirements
+  \makeatletter %only needed in preamble
+  \renewcommand\LARGE{\@setfontsize\LARGE{16pt}{19.2}}
+  \renewcommand\Large{\@setfontsize\Large{13pt}{15.6}}
+  \renewcommand\large{\@setfontsize\large{12pt}{14.4}}
+  \makeatother
+
+  % lists
+
+  \usepackage{enumitem} % 2019/06/20 v3.9
+
+  \setlist[itemize]{leftmargin = 2\baselineskip, itemindent = 0pt, labelsep = 0.5\baselineskip}
+  \setlist[itemize, 1]{label = \raisebox{0.11\baselineskip}{\scalebox{0.4333}{$\blacksquare$}}}
+  % blacksqaure of AMS was fitted to look like normal bullet
+  \setlist[itemize, 2]{label = $\bullet$}
+  \setlist[itemize, 3]{label = $\bullet$}
+  \setlist[itemize, 4]{label = $\bullet$}
+  \setlist[description]{font=\normalfont\bfseries}
 }
 
 % Supress widows and orphans
 \clubpenalty = 10000
 \widowpenalty = 10000
 \displaywidowpenalty = 10000
+% Avoid hyphenation across pages:
+\brokenpenalty10000
 % Allow ragged page bottoms
 \raggedbottom
 \listfiles
